@@ -1,0 +1,23 @@
+<main>
+    <h1>NHL API Visualized</h1>
+    <% @rosters.each do |roster| %>
+        <table>
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% roster.entries.each do |position, players| %>
+                    <% players.each do |player| %>
+                        <tr>
+                            <td><%= player["firstName"]["default"] %></td>
+                            <td><%= player["lastName"]["default"] %></td>
+                        </tr>
+                    <% end %>
+                <% end %>
+            </tbody>
+        </table>
+    <% end %>
+</main>
