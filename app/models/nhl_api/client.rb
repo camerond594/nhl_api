@@ -14,6 +14,12 @@ class NhlApi::Client
         JSON.parse(response.read_body)
     end
 
+    def player_stats(player_id:)
+        uri = URI.parse("#{API_WEB_BASE_URL}#{API_WEB_API_VER}/player/#{player_id}/landing/")
+        response = get_request(uri: uri)   
+        JSON.parse(response.read_body)
+    end
+
     private
 
     def get_request(uri:)
