@@ -5,6 +5,7 @@ class NhlApi::PullPlayers
 
   def record_players(player_ids:)
     players = []
+    player_models = []
     player_ids.each do |player_id|
       unless Player.exists?(player_id: player_id)
         players << @client.player_stats(player_id: player_id)
@@ -12,7 +13,7 @@ class NhlApi::PullPlayers
     end
     
     players.each do |player|
-      Player.find_or_create_by({
+      player_models << Player.find_or_create_by({
         player_id: player["playerId"],
         active: player["isActive"],
         current_team_id: player["currentTeamId"],
@@ -28,10 +29,13 @@ class NhlApi::PullPlayers
         weight_in_kilograms: player["weightInKilograms"],
         birth_date: player["birthDate"],
         birth_city: player["birthCity"]["default"],
-        birth_state_province: player["birthStateProvince"]["default"],
+        birth_state_province: player["birthStateProvince"] ? player["birthStateProvince"]["default"]: "",
         birth_country: player["birthCountry"],
-        shoots_catches: player["shootsCatches"]
+        shoots_catches: player["shootsCatches"],
+        slug: "#{player["firstName"]["default"]} #{player["lastName"]["default"]}".parameterize
       })
     end
+
+    player_models
   end
 end

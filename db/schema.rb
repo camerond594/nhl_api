@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_17_202305) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_24_192620) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -35,6 +35,41 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_17_202305) do
     t.string "shoots_catches"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "slug"
   end
 
+  create_table "roster_assignments", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "roster_id", null: false
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_roster_assignments_on_player_id"
+    t.index ["roster_id"], name: "index_roster_assignments_on_roster_id"
+  end
+
+  create_table "rosters", force: :cascade do |t|
+    t.string "year"
+    t.bigint "team_id", null: false
+    t.boolean "active", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_rosters_on_team_id"
+  end
+
+  create_table "teams", force: :cascade do |t|
+    t.string "full_name"
+    t.string "common_name"
+    t.string "place_name"
+    t.string "abbreviation"
+    t.string "slug"
+    t.integer "league_id"
+    t.integer "franchise_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_foreign_key "roster_assignments", "players"
+  add_foreign_key "roster_assignments", "rosters"
+  add_foreign_key "rosters", "teams"
 end

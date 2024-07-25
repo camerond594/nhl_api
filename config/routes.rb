@@ -7,6 +7,5 @@ Rails.application.routes.draw do
 
   root "homepage#index", as: "homepage"
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  resources :players
 end

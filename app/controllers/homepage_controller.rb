@@ -1,11 +1,6 @@
 class HomepageController < ApplicationController
     def index
-        binding.pry
-        client = NhlApi::Client.new
-        @rosters = []
-        team_abbrevs.first(1).each do |team|
-            @rosters << client.get_roster(team: team, year: "20212022")
-        end
+        @rosters = Roster.all.where(active: true)
     end
 
     def team_abbrevs
