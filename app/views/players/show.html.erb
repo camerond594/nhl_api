@@ -1,3 +1,11 @@
 <section>
-    <h1><%= @player.full_name %></h1>
+    <div class="player-card">
+        <div class="player-card__info">
+            <h1><%= @player.full_name %></h1>
+            <p class="player-card__data">Position: <%= @player.position %></p>
+            <p class="player-card__data">Shoots/Catches: <%= @player.shoots_catches %></p>
+            <p class="player-card__data">Born: <%= @player.birth_date %> -- <%= @player.birth_city %>, <%= @player.birth_country %></p>
+        </div>
+        <%= image_tag @player.headshot_url, class: "player-card__headshot" %>
+    </div>
 </section>

@@ -1,0 +1,29 @@
+.player-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+    align-items: start;
+    background-color: var(--white);
+    border: 1px solid var(--black);
+    border-radius: 0.25rem;
+    padding: 1rem;
+
+    &__info {
+        display: grid;
+        gap: 0rem;
+        background-color: var(--info);
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    &__headshot {
+        margin: 1rem;
+        padding: 0.5rem;
+        border-radius: 0.25rem;
+        background-color: var(--info);
+    }
+}
