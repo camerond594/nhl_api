@@ -3,10 +3,10 @@ class NhlApi::PullRosters
     @client = client
   end
 
-  def record_rosters(year:)
+  def record_rosters(year:, teams: team_abbrevs)
     rosters = []
 
-    [team_abbrevs.first].each do |team_abbrev|
+    teams.each do |team_abbrev|
       rosters << [@client.get_roster(team: team_abbrev, year: year), team_abbrev]
     end
 
