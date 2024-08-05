@@ -1,6 +1,6 @@
 class PlayersController < ApplicationController
   def index
-    @players = Player.all.where(active: true)
+    @players = Player.where(active: true).page(params[:page]).per(10)
   end
 
   def show

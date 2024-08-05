@@ -1,4 +1,6 @@
 .players {
+    display: grid;
+
     &__header {
         color: white;
         margin: 0.5rem;

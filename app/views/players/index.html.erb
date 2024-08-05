@@ -1,4 +1,4 @@
-<main>
+<main class="players">
     <h1 class="players__header">NHL Players</h1>
     <table class="players__table">
         <thead>
@@ -34,4 +34,6 @@
             <% end %>
         </tbody>
     </table>
+
+    <%= paginate @players %>
 </main>

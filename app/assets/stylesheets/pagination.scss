@@ -1,0 +1,16 @@
+.pagination {
+    background-color: var(--info);
+    margin: 0.25rem 0;
+    border-radius: 0.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .page {
+        background-color: var(--info);
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
