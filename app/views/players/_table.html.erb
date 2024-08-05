@@ -1,0 +1,34 @@
+<table class="players__table table">
+    <thead>
+        <tr>
+            <th>Player Name</th>
+            <th>Position</th>
+            <th>Birth date</th>
+            <th>Birth place</th>
+            <th>Seasons</th>
+            <th>GP</th>
+            <th>G</th>
+            <th>A</th>
+            <th>Pts</th>
+            <th>PIM</th>
+            <th>Yrs.</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @players&.each do |player| %>
+            <tr>
+                <td><%= link_to player.full_name, player_path(player.slug) %></td>
+                <td><%= player.position %></td>
+                <td><%= player.birth_date %></td>
+                <td><%= "#{player.birth_city}, #{player.birth_country}" %></td>
+                <td><%= "WIP" %></td>
+                <td><%= "WIP" %></td>
+                <td><%= "WIP" %></td>
+                <td><%= "WIP" %></td>
+                <td><%= "WIP" %></td>
+                <td><%= "WIP" %></td>
+                <td><%= "WIP" %></td>
+            </tr>
+        <% end %>
+    </tbody>
+</table>
