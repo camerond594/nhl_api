@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_24_192620) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_30_230205) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "events", force: :cascade do |t|
+    t.bigint "time_period_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["time_period_id"], name: "index_events_on_time_period_id"
+  end
 
   create_table "players", force: :cascade do |t|
     t.integer "player_id"
@@ -57,6 +64,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_192620) do
     t.index ["team_id"], name: "index_rosters_on_team_id"
   end
 
+  create_table "seasons", force: :cascade do |t|
+    t.bigint "time_period_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["time_period_id"], name: "index_seasons_on_time_period_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "full_name"
     t.string "common_name"
@@ -69,7 +83,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_24_192620) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "time_periods", force: :cascade do |t|
+    t.string "name", null: false
+    t.date "start_date", null: false
+    t.date "end_date"
+    t.integer "year"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["start_date", "name"], name: "index_time_periods_on_start_date_and_name", unique: true
+    t.index ["year"], name: "index_time_periods_on_year"
+  end
+
+  add_foreign_key "events", "time_periods"
   add_foreign_key "roster_assignments", "players"
   add_foreign_key "roster_assignments", "rosters"
   add_foreign_key "rosters", "teams"
+  add_foreign_key "seasons", "time_periods"
 end
