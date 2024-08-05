@@ -1,4 +1,6 @@
 class PlayersController < ApplicationController
+  before_action :add_breadcrumbs
+
   def index
     @players = Player.where(active: true).page(params[:page]).per(10)
   end
@@ -12,5 +14,9 @@ class PlayersController < ApplicationController
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
+  end
+
+  def add_breadcrumbs
+    breadcrumbs.add "Players", players_path
   end
 end

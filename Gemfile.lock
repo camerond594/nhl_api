@@ -82,6 +82,10 @@ GEM
     bindex (0.8.1)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
+    breadcrumbs (0.3.0)
+      actionview
+      activesupport
+      i18n
     builder (3.3.0)
     capybara (3.40.0)
       addressable
@@ -295,6 +299,7 @@ PLATFORMS
 
 DEPENDENCIES
   bootsnap
+  breadcrumbs
   capybara
   debug
   importmap-rails

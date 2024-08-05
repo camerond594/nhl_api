@@ -1,4 +1,6 @@
 class TeamsController < ApplicationController
+  before_action :add_breadcrumbs
+
   def index
     @teams = Team.all.page(params[:page]).per(25)
   end
@@ -12,5 +14,9 @@ class TeamsController < ApplicationController
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
+  end
+
+  def add_breadcrumbs
+    breadcrumbs.add "Teams", teams_path
   end
 end

@@ -1,0 +1,16 @@
+.breadcrumbs {
+    margin: 0.5rem 0;
+
+    a {
+        text-decoration: none;
+        color: var(--info);
+
+        &:hover {
+            color: var(--dark-grey);
+        }
+    }
+
+    .separator {
+        color: var(--info);
+    }
+}
