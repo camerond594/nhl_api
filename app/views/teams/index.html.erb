@@ -1,0 +1,19 @@
+<main class="teams">
+    <h1 class="teams__header">NHL Teams</h1>
+    <table class="teams__table table">
+        <thead>
+            <tr>
+                <th>Team Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @teams.each do |team| %>
+                <tr>
+                    <td><%= link_to team.full_name, team_path(team.slug) %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+
+    <%= paginate @teams %>
+</main>

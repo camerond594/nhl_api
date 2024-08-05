@@ -1,0 +1,19 @@
+.table {
+    padding: 1rem;
+    background-color: white;
+    border-radius: 0.5rem;
+
+    td {
+        padding: 0.25rem;
+    }
+
+    thead tr {
+        color: white;
+        background-color: var(--hockey-db-blue);
+    }
+
+    tbody tr {
+        color: black;
+        background-color: #DBEBF2;
+    }
+}
