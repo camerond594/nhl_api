@@ -5,6 +5,10 @@
             <p class="team-card__data">Tricode: <%= @team.abbreviation %></p>
         </div>
     </div>
-
+    <div class="team__rosters">
+        <%= form_with url: request.path, method: :get, local: true, id: "team__rosters-form" do %>
+            <%= select_tag :roster_id, options_from_collection_for_select(@rosters, :id, :name, @roster.id), include_blank: true, id: "team__rosters-select", onchange: "this.form.submit();" %>
+        <% end %>
+    </div>
     <%= render "players/table" %>
 </main>
