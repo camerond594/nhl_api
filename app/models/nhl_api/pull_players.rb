@@ -28,8 +28,8 @@ class NhlApi::PullPlayers
         weight_in_pounds: player["weightInPounds"],
         weight_in_kilograms: player["weightInKilograms"],
         birth_date: player["birthDate"],
-        birth_city: player["birthCity"]["default"],
-        birth_state_province: player["birthStateProvince"] ? player["birthStateProvince"]["default"]: "",
+        birth_city: player["birthCity"] ? player["birthCity"]["default"] : "",
+        birth_state_province: player["birthStateProvince"] ? player["birthStateProvince"]["default"] : "",
         birth_country: player["birthCountry"],
         shoots_catches: player["shootsCatches"],
         slug: "#{player["firstName"]["default"]} #{player["lastName"]["default"]}".parameterize
