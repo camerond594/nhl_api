@@ -1,5 +1,23 @@
-<main>
-    <h1>NHL API Visualized</h1>
-    <h1><%= link_to "Players", players_path %></h1>
-    <h1><%= link_to "Teams", teams_path %></h1>
+<main class="homepage">
+    <h1 class="homepage__title">NHL API Visualized</h1>
+    <p>
+        This is an application that is meant to become a quick way to reference hockey players and their statistics.
+        Some larger features to be written will be:
+        <ul class="homepage__list">
+            <li>
+                A complex query builder for reporting
+            </li>
+            <li>
+                Head to head player comparisons
+            </li>
+            <li>
+                An integration with Yahoo fantasy (if possible)
+            </li>
+        </ul>
+    </p>
+    <div class="homepage__links">
+        <h2>Page links:</h2>
+        <h1 class="homepage__link"><%= link_to "Players", players_path %></h1>
+        <h1 class="homepage__link"><%= link_to "Teams", teams_path %></h1>
+    </div>
 </main>

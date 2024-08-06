@@ -1,0 +1,25 @@
+.homepage {
+    display: grid;
+    justify-content: center;
+    margin: 1em;
+    padding: 1.5em;
+    background-color: var(--info);
+    border: 1px solid var(--black);
+    border-radius: 0.25rem;
+    text-align: center;
+
+    &__title {
+        margin: 1rem;
+    }
+
+    &__links {
+        display: grid;
+        margin: 1rem;
+        justify-content: center;
+    }
+
+    &__list {
+        text-align: left;
+        margin-left: 1.5em;
+    }
+}
