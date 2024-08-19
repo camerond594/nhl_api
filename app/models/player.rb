@@ -1,6 +1,7 @@
 class Player < ApplicationRecord
   has_many :roster_assignments
   has_many :rosters, through: :roster_assignments
+  has_many :player_stats, through: :roster_assignments
 
   def current_roster
     roster_assignments.find_by(active: true)&.roster
