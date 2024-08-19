@@ -112,7 +112,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_042907) do
     t.string "name", null: false
     t.date "start_date", null: false
     t.date "end_date"
-    t.integer "year"
+    t.string "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["start_date", "name"], name: "index_time_periods_on_start_date_and_name", unique: true
