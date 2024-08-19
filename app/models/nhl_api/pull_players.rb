@@ -5,15 +5,19 @@ class NhlApi::PullPlayers
 
   def record_players(player_ids:)
     players = []
-    player_models = []
+    players_to_create = []
+    created_players = []
+
     player_ids.each do |player_id|
-      unless Player.exists?(player_id: player_id)
-        players << @client.player_stats(player_id: player_id)
+      if player = Player.find_by(player_id: player_id)
+        players << player 
+      else
+        players_to_create << @client.player_stats(player_id: player_id)
       end
     end
     
-    players.each do |player|
-      player_models << Player.find_or_create_by({
+    players_to_create.each do |player|
+      created_players << Player.find_or_create_by({
         player_id: player["playerId"],
         active: player["isActive"],
         current_team_id: player["currentTeamId"],
@@ -36,6 +40,6 @@ class NhlApi::PullPlayers
       })
     end
 
-    player_models
+    created_players + players
   end
 end

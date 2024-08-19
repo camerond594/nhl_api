@@ -15,17 +15,29 @@ class NhlApi::PullRosters
       players = NhlApi::PullPlayers.new(client: @client).record_players(player_ids: player_ids)
       team = Team.find_by(abbreviation: team_abbrev)
 
-      team.rosters.find_by(active: true)&.update(active: false)
+      if year == "20232024"
+        team.rosters.find_by(active: true)&.update(active: false)
 
-      roster = Roster.find_or_create_by({
-        year: year,
-        team: team,
-        active: true
-      })
+        roster = Roster.find_or_create_by({
+          year: year,
+          team: team,
+          active: true
+        })
+      else
+        roster = Roster.find_or_create_by({
+          year: year,
+          team: team,
+          active: false
+        })
+      end
 
       players.each do |player|
-        player.roster_assignments.find_by(active: true)&.update(active: false)
-        RosterAssignment.create(player: player, roster: roster, active: true)
+        if year == "20232024"
+          player.roster_assignments.find_by(active: true)&.update(active: false)
+          RosterAssignment.create(player: player, roster: roster, active: true)
+        else
+          RosterAssignment.create(player: player, roster: roster, active: false)
+        end
       end
     end
   end
