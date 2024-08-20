@@ -1,0 +1,9 @@
+<%= search_form_for @q, url: players_path, method: :get, class: "player-search" do |f| %>
+  <div>
+    <%= f.text_field :full_name_cont, class: "player-search__input" %>
+  </div>
+  
+  <div>
+    <%= f.submit "Search", class: "player-search__submit" %>
+  </div>
+<% end %>

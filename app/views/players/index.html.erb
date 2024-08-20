@@ -1,6 +1,10 @@
 <main class="players">
-    <h1 class="players__header">NHL Players</h1>
-    <%= render "table" %>
-
-    <%= paginate @players %>
+    <section class="players__filters">
+        <h1 class="players__header">NHL Players</h1>
+        <%= render "shared/player_search" %>
+    </section>
+    <section class="players__table">
+        <%= render "table" %>
+        <%= paginate @players %>
+    </section>
 </main>
