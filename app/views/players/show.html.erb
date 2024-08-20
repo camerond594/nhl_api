@@ -1,4 +1,4 @@
-<section>
+<section class="player">
     <div class="player-card">
         <div class="player-card__info">
             <h1><%= @player.full_name %></h1>
@@ -8,4 +8,5 @@
         </div>
         <%= image_tag @player.headshot_url, class: "player-card__headshot" %>
     </div>
+    <%= render "detailed_table" %>
 </section>

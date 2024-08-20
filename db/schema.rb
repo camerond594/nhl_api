@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_19_042907) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_20_010724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_19_042907) do
     t.string "avg_toi"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "game_type", default: 1, null: false
     t.index ["roster_assignment_id"], name: "index_player_stats_on_roster_assignment_id"
     t.index ["season_id"], name: "index_player_stats_on_season_id"
   end

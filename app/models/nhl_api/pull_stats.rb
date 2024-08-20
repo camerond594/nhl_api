@@ -4,8 +4,6 @@ class NhlApi::PullStats
   end
 
   def record_stats(year:, player_ids:)
-    season = TimePeriod.find_by(year: year)&.season
-
     player_ids.each do |player_id|
       player = Player.find_by(player_id: player_id)
       stats_response = @client.player_stats(player_id: player_id)
@@ -14,15 +12,17 @@ class NhlApi::PullStats
       season_totals.each do |season_total|
         team = Team.find_by(full_name: season_total.dig("teamName", "default"))
         next unless team
+        season = TimePeriod.find_by(year: season_total["season"].to_s)&.season
 
         roster_assignment = RosterAssignment.joins(:roster)
-          .where(player: player, rosters: { team_id: team.id, year: year })
+          .where(player: player, rosters: { team_id: team.id, year: season_total["season"].to_s })
           .first
-        binding.pry
+
         if season_total["leagueAbbrev"] == "NHL" && team && roster_assignment
           PlayerStat.find_or_create_by(
             roster_assignment: roster_assignment,
             season: season,
+            game_type: season_total["gameTypeId"] - 1,
             points: season_total["points"],
             goals: season_total["goals"],
             assists: season_total["assists"],
