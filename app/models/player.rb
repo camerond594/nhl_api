@@ -17,16 +17,50 @@ class Player < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  private
+
   def self.ransackable_attributes(auth_object = nil)
-    %w[full_name]
+    %w[full_name total_games_played total_goals total_assists total_points]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["player_stats", "roster_assignments", "rosters"]
   end
 
   # If you want to allow sorting on certain attributes
   def self.ransackable_sortable_attributes(auth_object = nil)
-    %w[full_name first_name last_name position]
+    %w[full_name total_games_played total_goals total_assists total_points]
+  end
+
+  def self.summed_stat(stat_name:)
+    Arel.sql(
+      "COALESCE((
+        SELECT SUM(player_stats.#{stat_name})
+        FROM player_stats
+        JOIN roster_assignments ON roster_assignments.id = player_stats.roster_assignment_id
+        WHERE roster_assignments.player_id = players.id
+        GROUP BY roster_assignments.player_id
+      ), 0)"
+    )
   end
 
   ransacker :full_name do |parent|
     Arel::Nodes::InfixOperation.new('||', parent.table[:first_name], parent.table[:last_name])
+  end
+
+  ransacker :total_games_played do |parent|
+    summed_stat(stat_name: "games_played")
+  end
+
+  ransacker :total_goals do |parent|
+    summed_stat(stat_name: "goals")
+  end
+
+  ransacker :total_assists do |parent|
+    summed_stat(stat_name: "assists")
+  end
+
+  ransacker :total_points do |parent|
+    summed_stat(stat_name: "points")
   end
 end

@@ -1,15 +1,15 @@
 <table class="players__table table">
     <thead>
         <tr>
-            <th>Player Name</th>
+            <th class="players__table-header"><%= sort_link(@q, :full_name, "Player Name") %></th>
             <th>Position</th>
             <th>Birth date</th>
             <th>Birth place</th>
             <th>Seasons</th>
-            <th>GP</th>
-            <th>G</th>
-            <th>A</th>
-            <th>Pts</th>
+            <th class="players__table-header"><%= sort_link(@q, :total_games_played, "GP") %></th>
+            <th class="players__table-header"><%= sort_link(@q, :total_goals, "G") %></th>
+            <th class="players__table-header"><%= sort_link(@q, :total_assists, "A") %></th>
+            <th class="players__table-header"><%= sort_link(@q, :total_points, "Pts") %></th>
             <th>PIM</th>
             <th>Yrs.</th>
         </tr>

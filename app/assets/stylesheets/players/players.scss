@@ -15,6 +15,14 @@
 
     &__table {
         width: 100%;
+
+        a.sort_link {
+            color: white;
+        }
+
+        a.sort_link:visited {
+            color: white;
+        }
     }
 }
 
