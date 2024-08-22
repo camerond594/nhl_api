@@ -31,11 +31,11 @@
                         "N/A"
                     %>
                 </td>
-                <td><%= player.player_stats.regular_season.compact.sum(&:games_played) %></td>
-                <td><%= player.player_stats.regular_season.compact.sum(&:goals) %></td>
-                <td><%= player.player_stats.regular_season.compact.sum(&:assists) %></td>
-                <td><%= player.player_stats.regular_season.compact.sum(&:points) %></td>
-                <td><%= player.player_stats.regular_season.compact.sum(&:pim) %></td>
+                <td><%= player.player_stats.regular_season.sum { |stat| stat.games_played.to_i } %></td>
+                <td><%= player.player_stats.regular_season.sum { |stat| stat.goals.to_i } %></td>
+                <td><%= player.player_stats.regular_season.sum { |stat| stat.assists.to_i } %></td>
+                <td><%= player.player_stats.regular_season.sum { |stat| stat.points.to_i } %></td>
+                <td><%= player.player_stats.regular_season.sum { |stat| stat.pim.to_i } %></td>
                 <td><%= last_year.to_i - first_year.to_i %></td>
             </tr>
         <% end %>
