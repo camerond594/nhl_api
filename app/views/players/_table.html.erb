@@ -16,18 +16,27 @@
     </thead>
     <tbody>
         <% @players&.each do |player| %>
+            <%
+                first_year = player.rosters.minimum(:year)&.[](0..3)
+                last_year = player.rosters.maximum(:year)&.[](4..-1)
+            %>
             <tr>
                 <td><%= link_to player.full_name, player_path(player.slug) %></td>
                 <td><%= player.position %></td>
                 <td><%= player.birth_date %></td>
                 <td><%= "#{player.birth_city}, #{player.birth_country}" %></td>
-                <td><%= "WIP" %></td>
+                <td>
+                    <%= first_year && last_year ?
+                        "#{first_year}-#{last_year}" :
+                        "N/A"
+                    %>
+                </td>
                 <td><%= player.player_stats.regular_season.sum(&:games_played) %></td>
                 <td><%= player.player_stats.regular_season.sum(&:goals) %></td>
                 <td><%= player.player_stats.regular_season.sum(&:assists) %></td>
                 <td><%= player.player_stats.regular_season.sum(&:points) %></td>
                 <td><%= player.player_stats.regular_season.sum(&:pim) %></td>
-                <td><%= player.player_stats.regular_season.count %></td>
+                <td><%= last_year.to_i - first_year.to_i %></td>
             </tr>
         <% end %>
     </tbody>
