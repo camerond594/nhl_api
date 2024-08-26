@@ -3,7 +3,7 @@ class NhlApi::PullStats
     @client = client
   end
 
-  def record_stats(year:, player_ids:)
+  def record_stats(player_ids:)
     player_ids.each do |player_id|
       player = Player.find_by(player_id: player_id)
       stats_response = @client.player_stats(player_id: player_id)
