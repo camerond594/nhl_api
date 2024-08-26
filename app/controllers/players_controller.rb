@@ -2,8 +2,10 @@ class PlayersController < ApplicationController
   before_action :add_breadcrumbs
 
   def index
-    @players = Player.active.ransack(params[:q]).result
+    @q = Player.active.ransack(params[:q])
+    @players = @q.result
     @players = @players.order(:last_name) if params[:q].blank?
+
     @players = @players.page(params[:page]).per(10)
   end
 
