@@ -54,15 +54,15 @@
             <th>NHL Totals</th>
             <th></th>
             <th><%= @player.player_stats.regular_season.sum(&:games_played) %></th>
-            <th><%= @player.player_stats.regular_season.sum(&:goals) %></th>
-            <th><%= @player.player_stats.regular_season.sum(&:assists) %></th>
-            <th><%= @player.player_stats.regular_season.sum(&:points) %></th>
+            <th><%= @player.player_stats.regular_season.sum { |stat| stat.goals.to_i } %></th>
+            <th><%= @player.player_stats.regular_season.sum { |stat| stat.assists.to_i } %></th>
+            <th><%= @player.player_stats.regular_season.sum { |stat| stat.points.to_i } %></th>
             <th><%= @player.player_stats.regular_season.sum(&:pim) %></th>
             <th><%= @player.player_stats.regular_season.sum(&:plus_minus) %></th>
             <th><%= @player.player_stats.postseason.sum(&:games_played) %></th>
-            <th><%= @player.player_stats.postseason.sum(&:goals) %></th>
-            <th><%= @player.player_stats.postseason.sum(&:assists) %></th>
-            <th><%= @player.player_stats.postseason.sum(&:points) %></th>
+            <th><%= @player.player_stats.postseason.sum { |stat| stat.goals.to_i } %></th>
+            <th><%= @player.player_stats.postseason.sum { |stat| stat.assists.to_i } %></th>
+            <th><%= @player.player_stats.postseason.sum { |stat| stat.points.to_i } %></th>
             <th><%= @player.player_stats.postseason.sum(&:pim) %></th>
             <th><%= @player.player_stats.postseason.sum(&:plus_minus) %></th>
         </tr>
