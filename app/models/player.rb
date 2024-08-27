@@ -4,6 +4,8 @@ class Player < ApplicationRecord
   has_many :player_stats, through: :roster_assignments
 
   scope :active, -> { where(active: true) }
+  scope :skaters, -> { where.not(position: "G") }
+  scope :goalies, -> { where(position: "G") }
 
   def current_roster
     roster_assignments.find_by(active: true)&.roster

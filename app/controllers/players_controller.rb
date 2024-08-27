@@ -2,7 +2,7 @@ class PlayersController < ApplicationController
   before_action :add_breadcrumbs
 
   def index
-    @q = Player.active.ransack(params[:q])
+    @q = query
     @players = @q.result
     @players = @players.order(:last_name) if params[:q].blank?
 
@@ -18,6 +18,16 @@ class PlayersController < ApplicationController
   end
 
   private
+
+  def query
+    if params[:goalies] == "true"
+      Player.goalies.active.ransack(params[:q])
+    elsif params[:skaters] == "true"
+      Player.skaters.active.ransack(params[:q])
+    else
+      Player.active.ransack(params[:q])
+    end
+  end
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')
