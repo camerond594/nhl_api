@@ -5,6 +5,7 @@
             <p class="player-card__data">Position: <%= @player.position %></p>
             <p class="player-card__data">Shoots/Catches: <%= @player.shoots_catches %></p>
             <p class="player-card__data">Born: <%= @player.birth_date %> -- <%= @player.birth_city %>, <%= @player.birth_country %></p>
+            <p class="player-card__data">[<%= years_between(earlier_date: Date.parse(@player.birth_date), later_date: Time.now) %> years ago]</p>
         </div>
         <%= image_tag @player.headshot_url, class: "player-card__headshot" %>
     </div>
