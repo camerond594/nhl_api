@@ -2,16 +2,19 @@ class TeamsController < ApplicationController
   before_action :add_breadcrumbs
 
   def index
-    @teams = Team.all.page(params[:page]).per(25)
+    @teams = Team.with_active_roster
+      .order(:full_name)
+      .page(params[:page])
+      .per(32)
   end
 
   def show
     @team = Team.find_by(slug: params[:id])
     @rosters = @team.rosters
     @roster = Roster.find_by(id: params[:roster_id]) || @team.most_recent_roster
-    @players = @roster.players
+    @players = @roster&.players
 
-    not_found unless @team
+    not_found unless @team && @roster
   end
 
   private
