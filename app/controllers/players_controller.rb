@@ -13,7 +13,7 @@ class PlayersController < ApplicationController
     @player = Player.find_by(slug: params[:id])
     @stats_by_year = @player.player_stats.group_by do |player_stat|
       player_stat.season.year
-    end
+    end.sort
     not_found unless @player
   end
 
