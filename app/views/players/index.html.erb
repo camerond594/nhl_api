@@ -6,5 +6,9 @@
     <section class="players__table">
         <%= render "table", sortable: true %>
         <%= paginate @players %>
+        <%= form_with url: url_for(request.query_parameters.merge(per_page: nil)), method: :get, local: true do |form| %>
+            <%= form.label :per_page, "Items per page:" %>
+            <%= form.select :per_page, options_for_select([25, 50, 100], params[:per_page]), {}, { onchange: "this.form.submit();" } %>
+        <% end %>
     </section>
 </main>

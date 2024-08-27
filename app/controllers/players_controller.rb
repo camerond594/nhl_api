@@ -6,7 +6,7 @@ class PlayersController < ApplicationController
     @players = @q.result
     @players = @players.order(:last_name) if params[:q].blank?
 
-    @players = @players.page(params[:page]).per(10)
+    @players = @players.page(params[:page]).per(params[:per_page] || 25)
   end
 
   def show
