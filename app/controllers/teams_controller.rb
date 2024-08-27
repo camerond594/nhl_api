@@ -15,6 +15,8 @@ class TeamsController < ApplicationController
     @players = @roster&.players
 
     not_found unless @team && @roster
+
+    @players = @roster.grouped_roster
   end
 
   private
