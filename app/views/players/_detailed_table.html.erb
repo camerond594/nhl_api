@@ -58,13 +58,13 @@
             <th><%= @player.player_stats.regular_season.sum { |stat| stat.assists.to_i } %></th>
             <th><%= @player.player_stats.regular_season.sum { |stat| stat.points.to_i } %></th>
             <th><%= @player.player_stats.regular_season.sum(&:pim) %></th>
-            <th><%= @player.player_stats.regular_season.sum(&:plus_minus) %></th>
+            <th><%= @player.player_stats.regular_season.sum { |stat| stat.plus_minus.to_i } %></th>
             <th><%= @player.player_stats.postseason.sum(&:games_played) %></th>
             <th><%= @player.player_stats.postseason.sum { |stat| stat.goals.to_i } %></th>
             <th><%= @player.player_stats.postseason.sum { |stat| stat.assists.to_i } %></th>
             <th><%= @player.player_stats.postseason.sum { |stat| stat.points.to_i } %></th>
             <th><%= @player.player_stats.postseason.sum(&:pim) %></th>
-            <th><%= @player.player_stats.postseason.sum(&:plus_minus) %></th>
+            <th><%= @player.player_stats.postseason.sum { |stat| stat.plus_minus.to_i } %></th>
         </tr>
     </thead>
 </table>
