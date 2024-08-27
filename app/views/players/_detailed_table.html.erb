@@ -28,10 +28,15 @@
             <%
                 season_stats = stats.first
                 playoff_stats = stats.last
+                roster = season_stats.roster_assignment.roster
             %>
             <tr>
                 <td><%= year %></td>
-                <td><%= season_stats.roster_assignment.team.full_name %></td>
+                <td>
+                    <a href="<%= "/teams/#{roster.team.abbreviation}?roster_id=#{roster.id}" %>">
+                        <%= season_stats.roster_assignment.team.full_name %>
+                    </a>
+                </td>
                 <td><%= "NHL" %></td>
                 <td><%= season_stats.games_played %></td>
                 <td><%= season_stats.goals %></td>
