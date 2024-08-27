@@ -10,5 +10,5 @@
             <%= select_tag :roster_id, options_from_collection_for_select(@rosters, :id, :name, @roster.id), include_blank: true, id: "team__rosters-select", onchange: "this.form.submit();" %>
         <% end %>
     </div>
-    <%= render "players/table" %>
+    <%= render "players/table", sortable: false %>
 </main>
