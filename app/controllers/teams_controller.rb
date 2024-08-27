@@ -10,7 +10,7 @@ class TeamsController < ApplicationController
 
   def show
     @team = Team.find_by(slug: params[:id])
-    @rosters = @team.rosters
+    @rosters = @team.rosters.order(year: :desc)
     @roster = Roster.find_by(id: params[:roster_id]) || @team.most_recent_roster
     @players = @roster&.players
 
