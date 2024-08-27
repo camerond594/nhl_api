@@ -21,11 +21,11 @@ class PlayersController < ApplicationController
 
   def query
     if params[:goalies] == "true"
-      Player.goalies.active.ransack(params[:q])
+      Player.goalies.ransack(params[:q])
     elsif params[:skaters] == "true"
-      Player.skaters.active.ransack(params[:q])
+      Player.skaters.ransack(params[:q])
     else
-      Player.active.ransack(params[:q])
+      Player.ransack(params[:q])
     end
   end
 
