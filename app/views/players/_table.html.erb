@@ -1,11 +1,13 @@
 <table class="players__table table">
     <thead>
         <tr>
+            <th>#</th>
             <th class="players__table-header">
                 <%= sortable ? sort_link(@q, :full_name, "Player Name") : "Player Name" %>
             </th>
             <th>Position</th>
             <th>Birth date</th>
+            <th>Age</th>
             <th>Birth place</th>
             <th>Seasons</th>
             <th class="players__table-header">
@@ -31,9 +33,11 @@
                 last_year = player.rosters.maximum(:year)&.[](4..-1)
             %>
             <tr>
+                <td><%= player.sweater_number %></td>
                 <td><%= link_to player.full_name, player_path(player.slug) %></td>
                 <td><%= player.position %></td>
                 <td><%= player.birth_date %></td>
+                <td><%= player.age %></td>
                 <td><%= "#{player.birth_city}, #{player.birth_country}" %></td>
                 <td>
                     <%= first_year && last_year ?

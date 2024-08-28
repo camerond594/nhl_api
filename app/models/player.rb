@@ -19,6 +19,13 @@ class Player < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def age
+    ApplicationController.helpers.years_between(
+      earlier_date: Date.parse(birth_date),
+      later_date: Time.now
+    )
+  end
+
   private
 
   def self.ransackable_attributes(auth_object = nil)
