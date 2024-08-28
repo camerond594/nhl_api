@@ -9,6 +9,8 @@ class NhlApi::PullStats
       stats_response = @client.player_stats(player_id: player_id)
       season_totals = stats_response.dig("seasonTotals")
 
+      next unless season_totals
+
       season_totals.each do |season_total|
         team = Team.find_by(full_name: season_total.dig("teamName", "default"))
         next unless team
