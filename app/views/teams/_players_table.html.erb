@@ -99,8 +99,26 @@
     </thead>
     <tbody>
         <% @goalies.each do |goalie| %>
+            <%
+                season_stats = goalie
+                    .goalie_stats
+                    .regular_season
+                    .joins(:roster_assignment)
+                    .find_by(roster_assignment: {roster_id: @roster.id})
+            %>
             <tr>
                 <th><%= goalie.full_name %></th>
+                <th><%= season_stats.games_played.to_i %></th>
+                <th><%= season_stats.time_on_ice %></th>
+                <th><%= season_stats.goals_against.to_i %></th>
+                <th><%= season_stats.goals_against_average&.truncate(2) %></th>
+                <th><%= season_stats.wins.to_i %></th>
+                <th><%= season_stats.losses.to_i %></th>
+                <th><%= "N/A" %></th>
+                <th><%= season_stats.shots_against.to_i %></th>
+                <th><%= season_stats.save_percentage&.truncate(3) %></th>
+                <th><%= season_stats.goals.to_i %></th>
+                <th><%= season_stats.shutouts.to_i %></th>
             </tr>
         <% end %>
     </tbody>

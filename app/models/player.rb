@@ -2,6 +2,7 @@ class Player < ApplicationRecord
   has_many :roster_assignments
   has_many :rosters, through: :roster_assignments
   has_many :player_stats, through: :roster_assignments
+  has_many :goalie_stats, through: :roster_assignments
 
   scope :active, -> { where(active: true) }
   scope :skaters, -> { where.not(position: "G") }

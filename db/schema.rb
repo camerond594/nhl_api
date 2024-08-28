@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_20_010724) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_28_205920) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,6 +19,30 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_20_010724) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["time_period_id"], name: "index_events_on_time_period_id"
+  end
+
+  create_table "goalie_stats", force: :cascade do |t|
+    t.bigint "roster_assignment_id", null: false
+    t.bigint "season_id", null: false
+    t.integer "game_type", default: 1, null: false
+    t.integer "assists"
+    t.integer "games_played"
+    t.integer "games_started"
+    t.integer "goals"
+    t.integer "goals_against"
+    t.float "goals_against_average"
+    t.integer "wins"
+    t.integer "losses"
+    t.integer "ot_losses"
+    t.integer "pim"
+    t.float "save_percentage"
+    t.integer "shots_against"
+    t.integer "shutouts"
+    t.integer "time_on_ice"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["roster_assignment_id"], name: "index_goalie_stats_on_roster_assignment_id"
+    t.index ["season_id"], name: "index_goalie_stats_on_season_id"
   end
 
   create_table "player_stats", force: :cascade do |t|
@@ -121,6 +145,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_20_010724) do
   end
 
   add_foreign_key "events", "time_periods"
+  add_foreign_key "goalie_stats", "roster_assignments"
+  add_foreign_key "goalie_stats", "seasons"
   add_foreign_key "player_stats", "roster_assignments"
   add_foreign_key "player_stats", "seasons"
   add_foreign_key "roster_assignments", "players"
