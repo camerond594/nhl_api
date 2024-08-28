@@ -1,0 +1,64 @@
+<table class="players__table table">
+    <thead>
+        <tr>
+            <th colspan="3" style="background-color:white; padding:0px;"></th>
+            <th colspan="6">Regular Season</th>
+            <th colspan="6">Playoffs</th>
+            <th colspan="3">Vitals</th>
+        </tr>
+        <tr>
+            <th>#</th>
+            <th class="players__table-header">
+                <%= sortable ? sort_link(@q, :full_name, "Player Name") : "Player Name" %>
+            </th>
+            <th>Position</th>
+            <th class="players__table-header">
+                <%= sortable ? sort_link(@q, :total_games_played, "GP") : "GP" %>
+            </th>
+            <th class="players__table-header">
+                <%= sortable ? sort_link(@q, :total_goals, "G") : "G" %>
+            </th>
+            <th class="players__table-header">
+                <%= sortable ? sort_link(@q, :total_assists, "A") : "A" %>
+            </th>
+            <th class="players__table-header">
+                <%= sortable ? sort_link(@q, :total_points, "Pts") : "Pts" %>
+            </th>
+            <th>PIM</th>
+            <th>+/-</th>
+            <th>GP</th>
+            <th>G</th>
+            <th>A</th>
+            <th>Pts.</th>
+            <th>PIM</th>
+            <th>+/-</th>
+            <th>Birth place</th>
+            <th>Birth date</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @players.each do |player| %>
+        <tr>
+            <td><%= player.sweater_number %></td>
+            <td><%= link_to player.full_name, player_path(player.slug) %></td>
+            <td><%= player.position %></td>
+            <th><%= player.player_stats.regular_season.sum(&:games_played) %></th>
+            <th><%= player.player_stats.regular_season.sum { |stat| stat.goals.to_i } %></th>
+            <th><%= player.player_stats.regular_season.sum { |stat| stat.assists.to_i } %></th>
+            <th><%= player.player_stats.regular_season.sum { |stat| stat.points.to_i } %></th>
+            <th><%= player.player_stats.regular_season.sum(&:pim) %></th>
+            <th><%= player.player_stats.regular_season.sum { |stat| stat.plus_minus.to_i } %></th>
+            <th><%= player.player_stats.postseason.sum(&:games_played) %></th>
+            <th><%= player.player_stats.postseason.sum { |stat| stat.goals.to_i } %></th>
+            <th><%= player.player_stats.postseason.sum { |stat| stat.assists.to_i } %></th>
+            <th><%= player.player_stats.postseason.sum { |stat| stat.points.to_i } %></th>
+            <th><%= player.player_stats.postseason.sum(&:pim) %></th>
+            <th><%= player.player_stats.postseason.sum { |stat| stat.plus_minus.to_i } %></th>
+            <td><%= "#{player.birth_city}, #{player.birth_country}" %></td>
+            <td><%= player.birth_date %></td>
+            <td><%= player.age %></td>
+        </tr>
+        <% end %>
+    </tbody>
+</table>
