@@ -38,23 +38,23 @@
         </tr>
     </thead>
     <tbody>
-        <% @players.each do |player| %>
+        <% @skaters.each do |skater| %>
         <%
-            season_stats = player
+            season_stats = skater
                 .player_stats
                 .regular_season
                 .joins(:roster_assignment)
                 .find_by(roster_assignment: {roster_id: @roster.id})
-            postseason_stats = player
+            postseason_stats = skater
                 .player_stats
                 .postseason
                 .joins(:roster_assignment)
                 .find_by(roster_assignment: {roster_id: @roster.id})
         %>
         <tr>
-            <td><%= player.sweater_number %></td>
-            <td><%= link_to player.full_name, player_path(player.slug) %></td>
-            <td><%= player.position %></td>
+            <td><%= skater.sweater_number %></td>
+            <td><%= link_to skater.full_name, player_path(skater.slug) %></td>
+            <td><%= skater.position %></td>
             <th><%= season_stats&.games_played.to_i %></th>
             <th><%= season_stats&.goals.to_i %></th>
             <th><%= season_stats&.assists.to_i %></th>
@@ -67,10 +67,41 @@
             <th><%= postseason_stats&.points.to_i %></th>
             <th><%= postseason_stats&.pim.to_i %></th>
             <th><%= postseason_stats&.plus_minus.to_i %></th>
-            <td><%= "#{player.birth_city}, #{player.birth_country}" %></td>
-            <td><%= player.birth_date %></td>
-            <td><%= player.age %></td>
+            <td><%= "#{skater.birth_city}, #{skater.birth_country}" %></td>
+            <td><%= skater.birth_date %></td>
+            <td><%= skater.age %></td>
         </tr>
+        <% end %>
+    </tbody>
+</table>
+
+<table class="players__table table">
+    <thead>
+        <tr>
+            <th colspan="12">Goalies</th>
+        </tr>
+    </thead>
+    <thead>
+        <tr>
+            <th>Player Name</th>
+            <th>GP</th>
+            <th>Min</th>
+            <th>GA</th>
+            <th>GAA</th>
+            <th>W</th>
+            <th>L</th>
+            <th>T</th>
+            <th>Svs</th>
+            <th>Pct</th>
+            <th>EN</th>
+            <th>SO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @goalies.each do |goalie| %>
+            <tr>
+                <th><%= goalie.full_name %></th>
+            </tr>
         <% end %>
     </tbody>
 </table>
