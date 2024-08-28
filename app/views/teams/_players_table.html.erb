@@ -39,22 +39,34 @@
     </thead>
     <tbody>
         <% @players.each do |player| %>
+        <%
+            season_stats = player
+                .player_stats
+                .regular_season
+                .joins(:roster_assignment)
+                .find_by(roster_assignment: {roster_id: @roster.id})
+            postseason_stats = player
+                .player_stats
+                .postseason
+                .joins(:roster_assignment)
+                .find_by(roster_assignment: {roster_id: @roster.id})
+        %>
         <tr>
             <td><%= player.sweater_number %></td>
             <td><%= link_to player.full_name, player_path(player.slug) %></td>
             <td><%= player.position %></td>
-            <th><%= player.player_stats.regular_season.sum(&:games_played) %></th>
-            <th><%= player.player_stats.regular_season.sum { |stat| stat.goals.to_i } %></th>
-            <th><%= player.player_stats.regular_season.sum { |stat| stat.assists.to_i } %></th>
-            <th><%= player.player_stats.regular_season.sum { |stat| stat.points.to_i } %></th>
-            <th><%= player.player_stats.regular_season.sum(&:pim) %></th>
-            <th><%= player.player_stats.regular_season.sum { |stat| stat.plus_minus.to_i } %></th>
-            <th><%= player.player_stats.postseason.sum(&:games_played) %></th>
-            <th><%= player.player_stats.postseason.sum { |stat| stat.goals.to_i } %></th>
-            <th><%= player.player_stats.postseason.sum { |stat| stat.assists.to_i } %></th>
-            <th><%= player.player_stats.postseason.sum { |stat| stat.points.to_i } %></th>
-            <th><%= player.player_stats.postseason.sum(&:pim) %></th>
-            <th><%= player.player_stats.postseason.sum { |stat| stat.plus_minus.to_i } %></th>
+            <th><%= season_stats&.games_played %></th>
+            <th><%= season_stats&.goals %></th>
+            <th><%= season_stats&.assists %></th>
+            <th><%= season_stats&.points %></th>
+            <th><%= season_stats&.pim %></th>
+            <th><%= season_stats&.plus_minus.to_i %></th>
+            <th><%= postseason_stats&.games_played %></th>
+            <th><%= postseason_stats&.goals %></th>
+            <th><%= postseason_stats&.assists %></th>
+            <th><%= postseason_stats&.points %></th>
+            <th><%= postseason_stats&.pim %></th>
+            <th><%= postseason_stats&.plus_minus.to_i %></th>
             <td><%= "#{player.birth_city}, #{player.birth_country}" %></td>
             <td><%= player.birth_date %></td>
             <td><%= player.age %></td>
