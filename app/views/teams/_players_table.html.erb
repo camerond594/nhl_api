@@ -44,29 +44,29 @@
                 .player_stats
                 .regular_season
                 .joins(:roster_assignment)
-                .find_by(roster_assignment: {roster_id: @roster.id})
+                .find_by(roster_assignment: {roster_id: @roster.id}) || NullSeasonStat.new
             postseason_stats = skater
                 .player_stats
                 .postseason
                 .joins(:roster_assignment)
-                .find_by(roster_assignment: {roster_id: @roster.id})
+                .find_by(roster_assignment: {roster_id: @roster.id}) || NullSeasonStat.new
         %>
         <tr>
             <td><%= skater.sweater_number %></td>
             <td><%= link_to skater.full_name, player_path(skater.slug) %></td>
             <td><%= skater.position %></td>
-            <th><%= season_stats&.games_played.to_i %></th>
-            <th><%= season_stats&.goals.to_i %></th>
-            <th><%= season_stats&.assists.to_i %></th>
-            <th><%= season_stats&.points.to_i %></th>
-            <th><%= season_stats&.pim.to_i %></th>
-            <th><%= season_stats&.plus_minus.to_i %></th>
-            <th><%= postseason_stats&.games_played.to_i %></th>
-            <th><%= postseason_stats&.goals.to_i %></th>
-            <th><%= postseason_stats&.assists.to_i %></th>
-            <th><%= postseason_stats&.points.to_i %></th>
-            <th><%= postseason_stats&.pim.to_i %></th>
-            <th><%= postseason_stats&.plus_minus.to_i %></th>
+            <th><%= season_stats.games_played.to_i %></th>
+            <th><%= season_stats.goals.to_i %></th>
+            <th><%= season_stats.assists.to_i %></th>
+            <th><%= season_stats.points.to_i %></th>
+            <th><%= season_stats.pim.to_i %></th>
+            <th><%= season_stats.plus_minus.to_i %></th>
+            <th><%= postseason_stats.games_played.to_i %></th>
+            <th><%= postseason_stats.goals.to_i %></th>
+            <th><%= postseason_stats.assists.to_i %></th>
+            <th><%= postseason_stats.points.to_i %></th>
+            <th><%= postseason_stats.pim.to_i %></th>
+            <th><%= postseason_stats.plus_minus.to_i %></th>
             <td><%= "#{skater.birth_city}, #{skater.birth_country}" %></td>
             <td><%= skater.birth_date %></td>
             <td><%= skater.age %></td>
@@ -104,24 +104,22 @@
                     .goalie_stats
                     .regular_season
                     .joins(:roster_assignment)
-                    .find_by(roster_assignment: {roster_id: @roster.id})
+                    .find_by(roster_assignment: {roster_id: @roster.id}) || NullSeasonStat.new
             %>
-            <% if season_stats %>
-                <tr>
-                    <th><%= goalie.full_name %></th>
-                    <th><%= season_stats.games_played.to_i %></th>
-                    <th><%= season_stats.time_on_ice %></th>
-                    <th><%= season_stats.goals_against.to_i %></th>
-                    <th><%= season_stats.goals_against_average&.truncate(2) %></th>
-                    <th><%= season_stats.wins.to_i %></th>
-                    <th><%= season_stats.losses.to_i %></th>
-                    <th><%= "N/A" %></th>
-                    <th><%= season_stats.shots_against.to_i %></th>
-                    <th><%= season_stats.save_percentage&.truncate(3) %></th>
-                    <th><%= season_stats.goals.to_i %></th>
-                    <th><%= season_stats.shutouts.to_i %></th>
-                </tr>
-            <% end %>
+            <tr>
+                <th><%= goalie.full_name %></th>
+                <th><%= season_stats.games_played.to_i %></th>
+                <th><%= season_stats.time_on_ice %></th>
+                <th><%= season_stats.goals_against.to_i %></th>
+                <th><%= season_stats.goals_against_average&.truncate(2) %></th>
+                <th><%= season_stats.wins.to_i %></th>
+                <th><%= season_stats.losses.to_i %></th>
+                <th><%= "N/A" %></th>
+                <th><%= season_stats.shots_against.to_i %></th>
+                <th><%= season_stats.save_percentage&.truncate(3) %></th>
+                <th><%= season_stats.goals.to_i %></th>
+                <th><%= season_stats.shutouts.to_i %></th>
+            </tr>
         <% end %>
     </tbody>
 </table>
