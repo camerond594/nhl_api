@@ -20,7 +20,7 @@ class Player < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def age
+  def years_since_birth
     ApplicationController.helpers.years_between(
       earlier_date: Date.parse(birth_date),
       later_date: Time.now

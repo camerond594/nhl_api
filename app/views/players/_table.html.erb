@@ -7,7 +7,7 @@
             </th>
             <th>Position</th>
             <th>Birth date</th>
-            <th>Age</th>
+            <th>Years since birth</th>
             <th>Birth place</th>
             <th>Seasons</th>
             <th class="players__table-header">
@@ -37,7 +37,7 @@
                 <td><%= link_to player.full_name, player_path(player.slug) %></td>
                 <td><%= player.position %></td>
                 <td><%= player.birth_date %></td>
-                <td><%= player.age %></td>
+                <td><%= player.years_since_birth %></td>
                 <td><%= "#{player.birth_city}, #{player.birth_country}" %></td>
                 <td>
                     <%= first_year && last_year ?
