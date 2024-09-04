@@ -7,6 +7,6 @@ FactoryBot.define do
     pim { 10 }
     plus_minus { -20 }
 
-    season
+    association :season
   end
 end

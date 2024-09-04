@@ -20,13 +20,5 @@ FactoryBot.define do
         create(:roster_assignment, player: player, active: true)
       end
     end
-
-    trait :with_player_stat do
-      with_roster_assignment
-
-      after(:create) do |player|
-        create(:player_stat, roster_assignment: player.roster_assignments.first)
-      end
-    end
   end
 end

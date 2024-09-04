@@ -3,7 +3,8 @@ require "rails_helper"
 RSpec.describe PlayersController, type: :controller do
   render_views
 
-  let!(:player) { create :player, :with_player_stat }
+  let(:roster_assignment) { create :roster_assignment, :with_player_stat }
+  let!(:player) { roster_assignment.player }
 
   describe "GET #index" do
     it "renders the players list" do
