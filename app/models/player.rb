@@ -33,11 +33,11 @@ class Player < ApplicationRecord
   private
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[full_name total_games_played total_goals total_assists total_points]
+    %w[full_name total_games_played total_goals total_assists total_points position active_team_id active_player]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["player_stats", "roster_assignments", "rosters"]
+    ["player_stats", "roster_assignments", "rosters", "teams"]
   end
 
   # If you want to allow sorting on certain attributes
@@ -75,5 +75,33 @@ class Player < ApplicationRecord
 
   ransacker :total_points do |parent|
     summed_stat(stat_name: "points")
+  end
+
+  ransacker :active_team_id do
+    Arel.sql(
+      <<-SQL
+        (SELECT team_id FROM rosters
+         JOIN roster_assignments ON rosters.id = roster_assignments.roster_id
+         WHERE roster_assignments.player_id = players.id AND rosters.active = true
+         LIMIT 1)
+      SQL
+    )
+  end
+
+  ransacker :active_player do
+    Arel.sql(
+      <<-SQL
+        (
+          EXISTS (
+            SELECT 1
+            FROM roster_assignments
+            JOIN rosters ON roster_assignments.roster_id = rosters.id
+            WHERE roster_assignments.player_id = players.id
+              AND roster_assignments.active = true
+              AND rosters.active = true
+          )
+        )
+      SQL
+    )
   end
 end

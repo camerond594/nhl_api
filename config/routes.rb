@@ -9,4 +9,6 @@ Rails.application.routes.draw do
 
   resources :players
   resources :teams
+
+  get "query-builder", controller: "query_builder", action: "index", as: "query_builder"
 end

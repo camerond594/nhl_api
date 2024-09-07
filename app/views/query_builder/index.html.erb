@@ -1,0 +1,35 @@
+<main class="query-builder">
+    <section class="query-builder__form">
+        <%= search_form_for @q, url: query_builder_path, method: :get, local: true do |f| %>
+            <div class="field">
+                <%= f.label :full_name_cont, "Name" %>
+                <%= f.text_field :full_name_cont %>
+            </div>
+
+            <div class="field">
+                <%= f.label :position_eq, "Position" %>
+                <%= f.select :position_eq, options_for_select(Player.pluck(:position).uniq, f.object.position_eq), { include_blank: 'Any' } %>
+            </div>
+
+            <div class="field">
+                <%= f.label :active_team_id_eq, "Team" %>
+                <%= f.select :active_team_id_eq, options_for_select(Team.joins(:rosters).where(rosters: { active: true }).order(:full_name).pluck('teams.full_name', 'teams.id').uniq, f.object.active_team_id_eq), { include_blank: 'Any' } %>
+            </div>
+
+            <div class="field">
+                <%= f.label :active_player_eq, "Active Player" %>
+                <%= f.check_box :active_player_eq, {checked: f.object.active_player_eq.nil? ? true : f.object.active_player_eq.downcase == "true"}, "true", "false" %>
+            </div>
+
+            <div class="actions">
+                <%= f.submit "Search" %>
+            </div>
+        <% end %>
+    </section>
+
+    <section class="query-builder__results">
+        <% if @players.present? %>
+            <%= render "results" %>
+        <% end %>
+    </section>
+</main>
