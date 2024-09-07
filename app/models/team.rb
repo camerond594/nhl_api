@@ -1,6 +1,10 @@
 class Team < ApplicationRecord
   has_many :rosters, dependent: :destroy
 
+  validates :full_name, presence: true
+  validates :common_name, presence: true
+  validates :place_name, presence: true
+
   scope :with_active_roster, -> { with_active_roster }
 
   def most_recent_roster
