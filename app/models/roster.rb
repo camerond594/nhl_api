@@ -3,6 +3,8 @@ class Roster < ApplicationRecord
   has_many :roster_assignments, dependent: :destroy
   has_many :players, through: :roster_assignments
 
+  validates :year, presence: true
+
   def name
     year[0..3] + " - " + year[4..-1]
   end
