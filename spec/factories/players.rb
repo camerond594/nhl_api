@@ -15,9 +15,11 @@ FactoryBot.define do
       position { "G" }
     end
 
-    trait :with_roster_assignment do
+    trait :with_roster_assignments do
       after(:create) do |player|
         create(:roster_assignment, player: player, active: true)
+        create(:roster_assignment, player: player, active: false)
+        create(:roster_assignment, player: player, active: false)
       end
     end
   end

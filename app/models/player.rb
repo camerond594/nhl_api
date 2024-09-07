@@ -8,6 +8,9 @@ class Player < ApplicationRecord
   scope :skaters, -> { where.not(position: "G") }
   scope :goalies, -> { where(position: "G") }
 
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+
   def current_roster
     roster_assignments.find_by(active: true)&.roster
   end
