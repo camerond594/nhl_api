@@ -33,7 +33,17 @@ class Player < ApplicationRecord
   private
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[full_name total_games_played total_goals total_assists total_points position active_team_id active_player]
+    %w[
+      full_name
+      total_games_played
+      total_goals
+      total_assists
+      total_points
+      total_pim
+      position
+      active_team_id
+      active_player
+    ]
   end
 
   def self.ransackable_associations(auth_object = nil)
@@ -75,6 +85,10 @@ class Player < ApplicationRecord
 
   ransacker :total_points do |parent|
     summed_stat(stat_name: "points")
+  end
+
+  ransacker :total_pim do |parent|
+    summed_stat(stat_name: "pim")
   end
 
   ransacker :active_team_id do

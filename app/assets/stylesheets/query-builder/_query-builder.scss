@@ -4,13 +4,24 @@
     gap: 1em;
 
     &__form {
-        display: grid;
-        grid-template-columns: 1fr;
-        justify-content: space-between;
-        align-items: start;
         background-color: var(--white);
         border: 1px solid var(--black);
         border-radius: 0.25rem;
         padding: 1rem;
+
+        form {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            flex-wrap: wrap;
+        }
+
+        &-container {
+            display: grid;
+        }
+    }
+
+    &__submit {
+        margin-top: 0.75em;
     }
 }
