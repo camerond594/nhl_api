@@ -25,6 +25,28 @@
 
             <div class="query-builder__field-container">
                 <div>
+                    <%= f.label :years_since_birth_gteq, "Minimum Years Since Birth" %>
+                    <%= f.number_field(
+                            :years_since_birth_gteq,
+                            value: params.dig(:q, :years_since_birth_gteq),
+                            placeholder: "Enter number"
+                        )
+                    %>
+                </div>
+
+                <div>
+                    <%= f.label :years_since_birth_lteq, "Maximum Years Since Birth" %>
+                    <%= f.number_field(
+                        :years_since_birth_lteq,
+                        value: params.dig(:q, :years_since_birth_lteq),
+                        placeholder: "Enter number"
+                        )
+                    %>
+                </div>
+            </div>
+
+            <div class="query-builder__field-container">
+                <div>
                     <%= f.label :goals_gteq, "Minimum Goals" %>
                     <%= f.number_field(
                             :total_goals_gteq,

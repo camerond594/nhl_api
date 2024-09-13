@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_28_205920) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_12_231841) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,7 +85,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_28_205920) do
     t.integer "height_in_centimeters"
     t.integer "weight_in_pounds"
     t.integer "weight_in_kilograms"
-    t.string "birth_date"
     t.string "birth_city"
     t.string "birth_state_province"
     t.string "birth_country"
@@ -93,6 +92,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_28_205920) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "slug"
+    t.date "birth_date"
   end
 
   create_table "roster_assignments", force: :cascade do |t|

@@ -31,7 +31,7 @@ class NhlApi::PullPlayers
         height_in_centimeters: player["heightInCentimeters"],
         weight_in_pounds: player["weightInPounds"],
         weight_in_kilograms: player["weightInKilograms"],
-        birth_date: player["birthDate"],
+        birth_date: Date.parse(player["birthDate"]),
         birth_city: player["birthCity"] ? player["birthCity"]["default"] : "",
         birth_state_province: player["birthStateProvince"] ? player["birthStateProvince"]["default"] : "",
         birth_country: player["birthCountry"],

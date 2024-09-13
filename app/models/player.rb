@@ -25,7 +25,7 @@ class Player < ApplicationRecord
 
   def years_since_birth
     ApplicationController.helpers.years_between(
-      earlier_date: Date.parse(birth_date),
+      earlier_date: birth_date,
       later_date: Time.now
     )
   end
@@ -43,6 +43,7 @@ class Player < ApplicationRecord
       position
       active_team_id
       active_player
+      years_since_birth
     ]
   end
 
@@ -117,5 +118,9 @@ class Player < ApplicationRecord
         )
       SQL
     )
+  end
+
+  ransacker :years_since_birth do
+    Arel.sql("EXTRACT(YEAR FROM AGE(players.birth_date))")
   end
 end
