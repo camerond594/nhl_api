@@ -30,6 +30,11 @@ class Player < ApplicationRecord
     )
   end
 
+  def stats_for_season(year:)
+    player_stats.joins(season: :time_period)
+      .where(time_periods: { year: year })
+  end
+
   private
 
   def self.ransackable_attributes(auth_object = nil)

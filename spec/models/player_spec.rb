@@ -32,7 +32,7 @@ RSpec.describe Player, type: :model do
   end
 
   describe "Instance Methods" do
-    let(:player) { create :player, :with_roster_assignments }
+    let(:player) { create :player, :with_roster_assignments_and_stats }
     let(:active_roster) { player.roster_assignments.find_by(active: true).roster }
 
     describe "#full_name" do
@@ -58,6 +58,18 @@ RSpec.describe Player, type: :model do
     describe "#years_since_birth" do
       it "returns the current roster of the player" do
         expect(player.years_since_birth).to eq 54
+      end
+    end
+
+    describe "#stats_for_season" do
+      let(:expected_player_stat) {
+        PlayerStat.find do |player_stat|
+          player_stat.season.time_period.year == "20192020"
+        end
+      }
+
+      it "returns the player stats of the given season" do
+        expect(player.stats_for_season(year: "20192020")).to eq [expected_player_stat]
       end
     end
   end
