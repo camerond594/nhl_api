@@ -88,6 +88,14 @@ class Player < ApplicationRecord
     )
   end
 
+  def self.stat(stat_name:, game_type: "regular_season")
+    Arel.sql("(SELECT COALESCE(SUM(player_stats.#{stat_name}), 0)
+      FROM player_stats
+      INNER JOIN roster_assignments ON roster_assignments.id = player_stats.roster_assignment_id
+      WHERE roster_assignments.player_id = players.id AND game_type = #{PlayerStat.game_types[game_type]})
+    ")
+  end
+
   ransacker :full_name do |parent|
     Arel::Nodes::InfixOperation.new('||', parent.table[:first_name], parent.table[:last_name])
   end
@@ -152,5 +160,21 @@ class Player < ApplicationRecord
       INNER JOIN roster_assignments ON roster_assignments.id = player_stats.roster_assignment_id
       WHERE roster_assignments.player_id = players.id
       LIMIT 1)")
+  end
+
+  ransacker :games_played do |parent|
+    stat(stat_name: "games_played")
+  end
+
+  ransacker :goals do |parent|
+    stat(stat_name: "goals")
+  end
+ 
+  ransacker :assists do |parent|
+    stat(stat_name: "assists")
+  end
+
+  ransacker :points do |parent|
+    stat(stat_name: "points")
   end
 end
