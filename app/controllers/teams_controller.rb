@@ -16,6 +16,9 @@ class TeamsController < ApplicationController
     not_found unless @team && @roster
 
     @skaters = @roster.grouped_roster.skaters
+    @q = @skaters.ransack(params[:q])
+    @skaters = @q.result
+
     @goalies = @roster.players.goalies
   end
 
