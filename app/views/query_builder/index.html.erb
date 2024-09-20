@@ -133,6 +133,20 @@
                 </div>
             </div>
 
+            <div class="query-builder__field-container">
+                <div class="form-group">
+                    <%= f.label :season_year, "Select a Year" %>
+                    <%= f.select :season_year_eq,
+                        options_for_select(
+                            [["All Seasons", ""]] + TimePeriod.order(year: :desc).map { |time_period| [time_period.pretty_year, time_period.year] },
+                            params.dig(:q, :season_year_eq)
+                        ),
+                        include_blank: false,
+                        class: "form-control"
+                    %>
+                </div>
+            </div>
+
             <div class="query-builder__submit actions">
                 <%= f.submit "Search" %>
             </div>
@@ -141,7 +155,7 @@
 
     <section class="query-builder__results">
         <% if @players.present? %>
-            <%= render "results" %>
+            <%= render "results", season: @season %>
         <% end %>
     </section>
 </main>

@@ -5,6 +5,7 @@ class QueryBuilderController < ApplicationController
     @q = Player.ransack(query_params)
     @players = @q.result
     @players = @players.page(params[:page]).per(params[:per_page] || 25)
+    @season = TimePeriod.find_by(year: params.dig("q", "season_year_eq"))&.season
   end
 
   private

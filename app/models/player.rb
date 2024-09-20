@@ -45,20 +45,35 @@ class Player < ApplicationRecord
       total_assists
       total_points
       total_pim
+      games_played
+      goals
+      assists
+      points
       position
       active_team_id
       active_player
       years_since_birth
+      season_year
     ]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["player_stats", "roster_assignments", "rosters", "teams"]
+    ["player_stats", "roster_assignments", "rosters", "seasons", "teams"]
   end
 
   # If you want to allow sorting on certain attributes
   def self.ransackable_sortable_attributes(auth_object = nil)
-    %w[full_name total_games_played total_goals total_assists total_points]
+    %w[
+      full_name
+      total_games_played
+      total_goals
+      total_assists
+      total_points
+      games_played
+      goals
+      assists
+      points
+    ]
   end
 
   def self.summed_stat(stat_name:, game_type: "regular_season")
@@ -127,5 +142,15 @@ class Player < ApplicationRecord
 
   ransacker :years_since_birth do
     Arel.sql("EXTRACT(YEAR FROM AGE(players.birth_date))")
+  end
+
+  ransacker :season_year do |parent|
+    Arel.sql("(SELECT time_periods.year
+      FROM time_periods
+      INNER JOIN seasons ON seasons.time_period_id = time_periods.id
+      INNER JOIN player_stats ON player_stats.season_id = seasons.id
+      INNER JOIN roster_assignments ON roster_assignments.id = player_stats.roster_assignment_id
+      WHERE roster_assignments.player_id = players.id
+      LIMIT 1)")
   end
 end

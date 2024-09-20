@@ -1,30 +1,60 @@
+<% season = local_assigns.dig(:season) %>
+
 <table class="players__table table">
     <thead>
-        <tr>
-            <th>#</th>
-            <th class="players__table-header">
-                <%= sortable ? sort_link(@q, :full_name, "Player Name") : "Player Name" %>
-            </th>
-            <th>Position</th>
-            <th>Birth date</th>
-            <th>Years since birth</th>
-            <th>Birth place</th>
-            <th>Seasons</th>
-            <th class="players__table-header">
-                <%= sortable ? sort_link(@q, :total_games_played, "GP") : "GP" %>
-            </th>
-            <th class="players__table-header">
-                <%= sortable ? sort_link(@q, :total_goals, "G") : "G" %>
-            </th>
-            <th class="players__table-header">
-                <%= sortable ? sort_link(@q, :total_assists, "A") : "A" %>
-            </th>
-            <th class="players__table-header">
-                <%= sortable ? sort_link(@q, :total_points, "Pts") : "Pts" %>
-            </th>
-            <th>PIM</th>
-            <th>Yrs.</th>
-        </tr>
+        <% if season %>
+            <tr>
+                <th>#</th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :full_name, "Player Name") : "Player Name" %>
+                </th>
+                <th>Position</th>
+                <th>Birth date</th>
+                <th>Years since birth</th>
+                <th>Birth place</th>
+                <th>Seasons</th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :games_played, "GP") : "GP" %>
+                </th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :goals, "G") : "G" %>
+                </th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :assists, "A") : "A" %>
+                </th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :points, "Pts") : "Pts" %>
+                </th>
+                <th>PIM</th>
+                <th>Yrs.</th>
+            </tr>
+        <% else %>
+            <tr>
+                <th>#</th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :full_name, "Player Name") : "Player Name" %>
+                </th>
+                <th>Position</th>
+                <th>Birth date</th>
+                <th>Years since birth</th>
+                <th>Birth place</th>
+                <th>Seasons</th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :total_games_played, "GP") : "GP" %>
+                </th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :total_goals, "G") : "G" %>
+                </th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :total_assists, "A") : "A" %>
+                </th>
+                <th class="players__table-header">
+                    <%= sortable ? sort_link(@q, :total_points, "Pts") : "Pts" %>
+                </th>
+                <th>PIM</th>
+                <th>Yrs.</th>
+            </tr>
+        <% end %>
     </thead>
     <tbody>
         <% @players&.each do |player| %>
@@ -45,11 +75,23 @@
                         "N/A"
                     %>
                 </td>
-                <td><%= player.player_stats.regular_season.sum { |stat| stat.games_played.to_i } %></td>
-                <td><%= player.player_stats.regular_season.sum { |stat| stat.goals.to_i } %></td>
-                <td><%= player.player_stats.regular_season.sum { |stat| stat.assists.to_i } %></td>
-                <td><%= player.player_stats.regular_season.sum { |stat| stat.points.to_i } %></td>
-                <td><%= player.player_stats.regular_season.sum { |stat| stat.pim.to_i } %></td>
+                <% if season %>
+                    <%
+                        year = season.time_period.year
+                        stats_for_year = player.stats_for_season(year: year).regular_season.first
+                    %>
+                    <td><%= stats_for_year&.games_played.to_i %></td>
+                    <td><%= stats_for_year&.goals.to_i %></td>
+                    <td><%= stats_for_year&.assists.to_i %></td>
+                    <td><%= stats_for_year&.points.to_i %></td>
+                    <td><%= stats_for_year&.pim.to_i %></td>
+                <% else %>
+                    <td><%= player.player_stats.regular_season.sum { |stat| stat.games_played.to_i } %></td>
+                    <td><%= player.player_stats.regular_season.sum { |stat| stat.goals.to_i } %></td>
+                    <td><%= player.player_stats.regular_season.sum { |stat| stat.assists.to_i } %></td>
+                    <td><%= player.player_stats.regular_season.sum { |stat| stat.points.to_i } %></td>
+                    <td><%= player.player_stats.regular_season.sum { |stat| stat.pim.to_i } %></td>
+                <% end %>
                 <td><%= last_year.to_i - first_year.to_i %></td>
             </tr>
         <% end %>
