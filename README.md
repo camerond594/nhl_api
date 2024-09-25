@@ -1,5 +1,7 @@
 # NHL API Visualized
 
+[See it in action here](https://hockey.cameronday.ca).
+
 ## Inception
 I have been wanting/trying to work on a project similar to this for many years now, but I have always been tripped up by how the NHL's API works. In the past it has been an entirely undocumented mess with people guessing at their URL structures.
 Now that the NHL has released their new Edge feature, they also have new API endpoints which are a bit more obvious. Thankfully, others out there have documented what they have found. See [this link](https://gitlab.com/dword4/nhlapi/-/blob/master/new-api.md) and [this other link](https://github.com/coreyjs/nhl-api-py/tree/main).
