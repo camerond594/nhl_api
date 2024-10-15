@@ -14,6 +14,8 @@
             <% else %>
                 <%= render "results", season: @season %>
             <% end %>
+        <% else %>
+            <%= render "no_results" %>
         <% end %>
     </section>
 </main>
