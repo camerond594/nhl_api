@@ -15,14 +15,18 @@ class TeamsController < ApplicationController
    
     not_found unless @team && @roster
 
-    @skaters = @roster.grouped_roster.skaters
-    @q = @skaters.ransack(params[:q])
-    @skaters = @q.result
-
+    @q = PlayerStat.regular_season.ransack(query_params)
+    @skater_stats = @q.result.includes(:roster_assignment)
     @goalies = @roster.players.goalies
   end
 
   private
+
+  def query_params
+    params[:q] ||= {}
+    params[:q][:roster_id_eq] = @roster.id
+    params[:q]
+  end
 
   def not_found
     raise ActionController::RoutingError.new('Not Found')

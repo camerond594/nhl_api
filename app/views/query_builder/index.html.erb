@@ -1,161 +1,19 @@
 <main class="query-builder">
     <section class="query-builder__form">
-        <%= search_form_for @q, url: query_builder_path, method: :get, local: true do |f| %>
-            <div class="query-builder__field-container">
-                <div class="field">
-                    <%= f.label :full_name_cont, "Name" %>
-                    <%= f.text_field :full_name_cont %>
-                </div>
-
-                <div class="field">
-                    <%= f.label :position_eq, "Position" %>
-                    <%= f.select :position_eq, options_for_select(Player.pluck(:position).uniq, f.object.position_eq), { include_blank: 'Any' } %>
-                </div>
-
-                <div class="field">
-                    <%= f.label :active_team_id_eq, "Team" %>
-                    <%= f.select :active_team_id_eq, options_for_select(Team.joins(:rosters).where(rosters: { active: true }).order(:full_name).pluck('teams.full_name', 'teams.id').uniq, f.object.active_team_id_eq), { include_blank: 'Any' } %>
-                </div>
-
-                <div class="field">
-                    <%= f.label :active_player_eq, "Active Player" %>
-                    <%= f.check_box :active_player_eq, {checked: f.object.active_player_eq.nil? ? true : f.object.active_player_eq.downcase == "true"}, "true", "false" %>
-                </div>
-            </div>
-
-            <div class="query-builder__field-container">
-                <div>
-                    <%= f.label :years_since_birth_gteq, "Minimum Years Since Birth" %>
-                    <%= f.number_field(
-                            :years_since_birth_gteq,
-                            value: params.dig(:q, :years_since_birth_gteq),
-                            placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-
-                <div>
-                    <%= f.label :years_since_birth_lteq, "Maximum Years Since Birth" %>
-                    <%= f.number_field(
-                        :years_since_birth_lteq,
-                        value: params.dig(:q, :years_since_birth_lteq),
-                        placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-            </div>
-
-            <div class="query-builder__field-container">
-                <div>
-                    <%= f.label :goals_gteq, "Minimum Goals" %>
-                    <%= f.number_field(
-                            :total_goals_gteq,
-                            value: params.dig(:q, :total_goals_gteq),
-                            placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-
-                <div>
-                    <%= f.label :goals_lteq, "Maximum Goals" %>
-                    <%= f.number_field(
-                        :total_goals_lteq,
-                        value: params.dig(:q, :total_goals_lteq),
-                        placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-            </div>
-
-            <div class="query-builder__field-container">
-                <div>
-                    <%= f.label :assists_gteq, "Minimum Assists" %>
-                    <%= f.number_field(
-                            :total_assists_gteq,
-                            value: params.dig(:q, :total_assists_gteq),
-                            placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-
-                <div>
-                    <%= f.label :assists_lteq, "Maximum Assists" %>
-                    <%= f.number_field(
-                            :total_assists_lteq,
-                            value: params.dig(:q, :total_assists_lteq),
-                            placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-            </div>
-
-            <div class="query-builder__field-container">
-                <div>
-                    <%= f.label :points_gteq, "Minimum Points" %>
-                    <%= f.number_field(
-                            :total_points_gteq,
-                            value: params.dig(:q, :total_points_gteq),
-                            placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-
-                <div>
-                    <%= f.label :points_lteq, "Maximum Points" %>
-                    <%= f.number_field(
-                            :total_points_lteq,
-                            value: params.dig(:q, :total_points_lteq),
-                            placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-            </div>
-
-            <div class="query-builder__field-container">
-                <div>
-                    <%= f.label :pim_gteq, "Minimum PIM" %>
-                    <%= f.number_field(
-                            :total_pim_gteq,
-                            value: params.dig(:q, :total_pim_gteq),
-                            placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-
-                <div>
-                    <%= f.label :pim_lteq, "Maximum PIM" %>
-                    <%= f.number_field(
-                            :total_pim_lteq,
-                            value: params.dig(:q, :total_pim_lteq),
-                            placeholder: "Enter number"
-                        )
-                    %>
-                </div>
-            </div>
-
-            <div class="query-builder__field-container">
-                <div class="form-group">
-                    <%= f.label :season_year, "Select a Year" %>
-                    <%= f.select :season_year_eq,
-                        options_for_select(
-                            [["All Seasons", ""]] + TimePeriod.order(year: :desc).map { |time_period| [time_period.pretty_year, time_period.year] },
-                            params.dig(:q, :season_year_eq)
-                        ),
-                        include_blank: false,
-                        class: "form-control"
-                    %>
-                </div>
-            </div>
-
-            <div class="query-builder__submit actions">
-                <%= f.submit "Search" %>
-            </div>
+        <% if @skater_stats %>
+            <%= render "player_stat_search_form" %>
+        <% else %>
+            <%= render "player_search_form" %>
         <% end %>
     </section>
 
     <section class="query-builder__results">
-        <% if @players.present? %>
-            <%= render "results", season: @season %>
+        <% if @players.present? || @skater_stats.present? %>
+            <% if @skater_stats %>
+                <%= render "teams/players_table", sortable: true %>
+            <% else %>
+                <%= render "results", season: @season %>
+            <% end %>
         <% end %>
     </section>
 </main>
